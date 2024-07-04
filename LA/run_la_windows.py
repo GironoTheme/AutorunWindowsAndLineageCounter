@@ -4,7 +4,7 @@ import win32con
 import win32gui
 import win32api
 from pywinauto import Desktop, Application
-from Lineage.go_to_world import go_to_world
+from LA.go_to_world import go_to_world
 from Check.check import match_lineage
 
 

@@ -1,6 +1,6 @@
 from time import sleep
 from pywinauto import mouse
-from Purple import go_to_lineage, skip_an_unauthorized_account
+from Purple import go_to_la, skip_an_unauthorized_account
 from Purple.purple import PurpleSingleton
 
 

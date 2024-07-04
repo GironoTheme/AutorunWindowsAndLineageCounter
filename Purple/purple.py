@@ -1,4 +1,4 @@
-from Purple import go_to_lineage
+from Purple import go_to_la
 from pywinauto import Application
 from pywinauto.findwindows import ElementNotFoundError
 from time import sleep

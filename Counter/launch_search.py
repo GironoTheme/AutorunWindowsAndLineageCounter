@@ -1,6 +1,6 @@
 import pystray
 from PIL import Image, ImageDraw, ImageFont
-from LineageCounter.find_windows import find_windows
+from Counter.find_windows import find_windows
 import time
 import threading
 

@@ -47,7 +47,7 @@ def x():
 
 
 def lineage():
-    take_screenshot('Images\\lineage.png', (5, 5, 125, 35))
+    take_screenshot('Images\\la.png', (5, 5, 125, 35))
 
 
 def match_x():
@@ -60,15 +60,9 @@ def match_x():
 
 def match_lineage():
     lineage()
-    if matching('Images\\lineage_original.png', 'Images\\lineage.png') is True:
+    if matching('Images\\la_original.png', 'Images\\la.png') is True:
         return True
 
     return False
-
-
-def find_character():
-    take_screenshot('Images\\last_account_original.png', (1078, 264, 1365, 284))
-
-
 
 

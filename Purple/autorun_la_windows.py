@@ -1,7 +1,7 @@
-from Purple import go_to_lineage
+from Purple import go_to_la
 from Purple.going_through_main_accounts import going_through_main_accounts
 from Purple import skip_an_unauthorized_account
-from Lineage.run_lineage_windows import run_lineage_windows
+from LA.run_la_windows import run_lineage_windows
 from time import sleep
 
 from Purple.purple import PurpleSingleton
