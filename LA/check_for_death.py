@@ -3,16 +3,19 @@ from ahk import AHK
 from time import sleep
 from Check.check import matching, take_screenshot
 import pytesseract
+import os
 
-ahk = AHK()
+def find_file(file_name):
+    drives = [f"{chr(drive)}:\\" for drive in range(ord('A'), ord('Z') + 1) if os.path.exists(f"{chr(drive)}:\\")]
+    for drive in drives:
+        for root_path in Path(drive).rglob(file_name):
+            return root_path
+
+    return None
 
 
-def find_path_to_folder(folder):
-    for root_path in Path(f'С:\\').glob(f'**\\{folder}\\'):
-        return root_path
-
-
-path_to_tesseract = f"{find_path_to_folder('tesseract')}\\tesseract.exe"
+ahk = AHK(executable_path=str(find_file("AutoHotkey.exe")))
+path_to_tesseract = find_file("tesseract.exe")
 pytesseract.pytesseract.tesseract_cmd = path_to_tesseract
 
 
@@ -55,10 +58,10 @@ def revive():
     sleep(5)
 
     move_and_click(x=1250, y=80)
-    take_screenshot('amount_of_free_revives.png', area_of_screenshot=(385, 600, 420, 640))
+    take_screenshot('Images\\amount_of_free_revives.png', area_of_screenshot=(385, 600, 420, 640))
 
     try:
-        amount_of_free_revives = int(pytesseract.image_to_string('amount_of_free_revives.png',
+        amount_of_free_revives = int(pytesseract.image_to_string('Images\\amount_of_free_revives.png',
                                      config='--psm 10 --oem 3 -c tessedit_char_whitelist=0123456789'))
 
     except:
@@ -67,7 +70,7 @@ def revive():
         __send_to_last_location()
         return
 
-    while matching('is_items_lose_via_death.png', 'adena.png', need_for_taking_screenshot=True,
+    while matching('Images\\is_items_lose_via_death.png', 'Images\\adena.png', need_for_taking_screenshot=True,
                    area_of_screenshot=(430, 600, 480, 650)) is False:
         move_and_click(x=500, y=620)
 
@@ -90,11 +93,12 @@ def revive():
     move_and_click(x=1050, y=700)
     move_and_click(x=400, y=190)
 
-    while matching('is_items_lose_via_death.png',
-                   'adena.png',
+    while matching('Images\\is_items_lose_via_death.png',
+                   'Images\\adena.png',
                    need_for_taking_screenshot=True,
                    area_of_screenshot=(430, 600, 480, 650)) is False:
-        ahk.mouse_move('move', x=500, y=620)
+
+        move_and_click(x=500, y=620)
 
     for i in range(4):
         move_and_click(x=500, y=250 + (i * 100))

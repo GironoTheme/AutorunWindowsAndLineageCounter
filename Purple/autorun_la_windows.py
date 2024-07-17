@@ -29,7 +29,7 @@ class AutorunLineageWindows:
         sleep(6)
         if skip_an_unauthorized_account.check(self.app) is True:
             self.launch_purple()
-            go_to_lineage.go_to_lineage(self.app)
+            go_to_la.go_to_lineage(self.app)
             sleep(4)
             return True
 
@@ -40,15 +40,23 @@ class AutorunLineageWindows:
         self._multi_account_management()
 
     def _start_game_on_main_account(self):
+        def _start_game():
+            self.app.child_window(title="Start Game", auto_id="PlayButton",
+                                  control_type="Button").wrapper_object().click_input()
+            if self._check_authorization() is False:
+                self._up_purple()
+
         sleep(1)
         try:
             self.app.child_window(title="Running game", control_type="Text").is_visible()
 
         except:
-            self.app.child_window(title="Start Game", auto_id="PlayButton", control_type="Button").wrapper_object().click_input()
+            try:
+                _start_game()
 
-            if self._check_authorization() is False:
-                self._up_purple()
+            except:
+                sleep(300)
+                _start_game()
 
     def _multi_account_management(self):
         sleep(2)

@@ -47,7 +47,7 @@ class Window:
         self.app.maximize()
         self.app.restore()
 
-        go_to_lineage.go_to_lineage(self.app)
+        go_to_la.go_to_lineage(self.app)
 
 
 class PurpleSingleton:

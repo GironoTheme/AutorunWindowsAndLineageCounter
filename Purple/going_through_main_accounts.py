@@ -18,7 +18,7 @@ class GoingThroughMainAccounts:
         sleep(6)
         if skip_an_unauthorized_account.check(self.app) is True:
             self._get_purple()
-            go_to_lineage.go_to_lineage(self.app)
+            go_to_la.go_to_lineage(self.app)
             sleep(4)
             return True
 
@@ -29,7 +29,7 @@ class GoingThroughMainAccounts:
 
         accounts_used = ["b***ge@mail.ru", "dada***88@rambler.ru"]
 
-        go_to_lineage.go_to_lineage(self.app)
+        go_to_la.go_to_lineage(self.app)
 
         while True:
             self._open_main_accounts_management()
@@ -58,7 +58,7 @@ class GoingThroughMainAccounts:
                     sleep(20)
                     accounts_used.append(account_text)
 
-                    go_to_lineage.go_to_lineage(self.app)
+                    go_to_la.go_to_lineage(self.app)
                     func()
                     found_new_account = True
                     break

@@ -3,9 +3,7 @@ import win32com.client
 import win32con
 import win32gui
 import win32api
-from pywinauto import Desktop, Application
 from LA.go_to_world import go_to_world
-from Check.check import match_lineage
 
 
 class RunLineageWindows:
@@ -20,6 +18,7 @@ class RunLineageWindows:
 
         if windows_list:
             for index, window in enumerate(windows_list):
+                sleep(1.5)
                 if windows_list[index] in self.windows_process:
                     continue
 
