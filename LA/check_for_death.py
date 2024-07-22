@@ -29,7 +29,7 @@ def is_dead():
 
     take_screenshot(f'Images\\is_dead.png', area_of_screenshot=(730, 825, 1125, 920))
 
-    dead_button_1 = matching(f'Images\\imgs\\is_dead.png',
+    dead_button_1 = matching(f'Images\\is_dead.png',
                              f'Images\\dead.png', need_for_taking_screenshot=False)
 
     dead_button_2 = matching(f'Images\\is_dead.png',

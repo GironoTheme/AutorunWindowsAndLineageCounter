@@ -3,7 +3,7 @@ from Purple.going_through_main_accounts import going_through_main_accounts
 from Purple import skip_an_unauthorized_account
 from LA.run_la_windows import run_lineage_windows
 from time import sleep
-
+from logging import logger
 from Purple.purple import PurpleSingleton
 
 
@@ -20,10 +20,12 @@ class AutorunLineageWindows:
         going_through_main_accounts.iter_main_accounts(self._manipulations)
 
     def _get_purple(self):
+        logger.info("Запуск get_purple")
         sleep(4)
         purple_instance = PurpleSingleton.get_instance()
         self.launch_purple = purple_instance.launch_purple()
         self.app = purple_instance.app
+        logger.info("get_purple прекратил работу")
 
     def _check_authorization(self):
         sleep(6)
@@ -80,12 +82,12 @@ class AutorunLineageWindows:
         sleep(1)
 
         all_checkboxes = self.app.descendants(control_type="CheckBox")
-
         checkboxes = [checkbox for checkbox in all_checkboxes if
                       checkbox.element_info.automation_id == "MultiAccountListCheckBox"]
 
         if self._checking_checkboxes(checkboxes):
-            for index, checkbox in enumerate(checkboxes):
+            index = 0
+            while index < len(checkboxes):
                 try:
                     sleep(1)
                     if index != 0:
@@ -112,7 +114,6 @@ class AutorunLineageWindows:
                         self._start_game_for_multi_accounts()
 
                     if index > 0:
-
                         prev_checkbox = checkboxes[index - 1]
                         prev_checkbox.click_input()
                         sleep(1)
@@ -120,23 +121,38 @@ class AutorunLineageWindows:
                         checkbox.click_input()
                         self._start_game_for_multi_accounts()
 
-                    if index >= len(checkboxes):
-                        print(f"Checkbox {index} no longer exists, ending loop.")
-                        break
+                    index += 1
 
                 except Exception as e:
-                    print(f"Не удалось взаимодействовать с CheckBox {index}: {e}")
+                    logger.warning(f"Не удалось взаимодействовать с CheckBox {index}: {e}\nПерезапускаю PURPLE")
+                    self._restart_purple_and_go_to_multi_accounts()
+                    index = 0
 
         try:
             self.app.child_window(auto_id="CloseButton", control_type="Button").wrapper_object().click_input()
         except:
+            logger.warning("")
             pass
 
+    def _restart_purple_and_go_to_multi_accounts(self):
+        logger.info('Перезапуск Purple')
+        self._kill_purple()
+
+        self._get_purple()
+
+        self._open_multi_account()
+        self._open_multi_account_settings()
+
+    def _kill_purple(self):
+        sleep(1)
+        self.app.child_window(auto_id="PART_Close", control_type="Button").click_input()
+        sleep(2)
+
+        self.app.child_window(title="Close", control_type="Text").click_input()
+        sleep(7)
+
     def _checking_checkboxes(self, checkboxes):
-        if not checkboxes:
-            return False
-        else:
-            return True
+        return bool(checkboxes)
 
     def _up_purple(self):
         sleep(85)
