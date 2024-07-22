@@ -1,9 +1,10 @@
+from Counter.launch_search import launch_search
 from Purple import go_to_la
 from Purple.going_through_main_accounts import going_through_main_accounts
 from Purple import skip_an_unauthorized_account
 from LA.run_la_windows import run_lineage_windows
 from time import sleep
-from logging import logger
+from logger import logger
 from Purple.purple import PurpleSingleton
 
 
@@ -18,6 +19,8 @@ class AutorunLineageWindows:
         self._manipulations()
 
         going_through_main_accounts.iter_main_accounts(self._manipulations)
+
+        launch_search()
 
     def _get_purple(self):
         logger.info("Запуск get_purple")
