@@ -1,3 +1,4 @@
+from pywinauto.findwindows import ElementNotFoundError
 from Counter.launch_search import launch_search
 from Purple import go_to_la
 from Purple.going_through_main_accounts import going_through_main_accounts
@@ -15,23 +16,20 @@ class AutorunLineageWindows:
 
     def launch(self):
         self._get_purple()
-
         self._manipulations()
-
         going_through_main_accounts.iter_main_accounts(self._manipulations)
-
         launch_search()
 
     def _get_purple(self):
-        logger.info("Запуск get_purple")
         sleep(4)
         purple_instance = PurpleSingleton.get_instance()
-        self.launch_purple = purple_instance.launch_purple()
+        self.launch_purple = purple_instance.launch_purple
+        self.launch_purple()
+
         self.app = purple_instance.app
-        logger.info("get_purple прекратил работу")
 
     def _check_authorization(self):
-        sleep(6)
+        sleep(8)
         if skip_an_unauthorized_account.check(self.app) is True:
             self.launch_purple()
             go_to_la.go_to_lineage(self.app)
@@ -161,11 +159,15 @@ class AutorunLineageWindows:
         sleep(85)
         run_lineage_windows.switch_windows()
 
-        self.app.set_focus()
-        self.app.minimize()
-        self.app.maximize()
-        self.app.restore()
-        sleep(1)
+        try:
+            self.app.set_focus()
+            self.app.minimize()
+            self.app.maximize()
+            self.app.restore()
+            sleep(1)
+        except (ElementNotFoundError, TimeoutError) as e:
+            logger.warning(f"Не удалось выполнить операцию на окне PURPLE: {e}")
+            self.launch_purple()
 
     def _start_game_for_multi_accounts(self):
         sleep(1)
