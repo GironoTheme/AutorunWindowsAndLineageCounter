@@ -41,7 +41,7 @@ class Window:
             logger.info(f"PURPLE окно не найдено: {e}. Запуск нового экземпляра...")
 
             self.app = Application(backend="uia").start(launcher_path)
-            self.app.wait_cpu_usage_lower(threshold=5)
+            sleep(35)
 
             try:
                 self.app.connect(title='PURPLE')
