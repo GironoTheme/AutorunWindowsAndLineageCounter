@@ -1,10 +1,12 @@
+from time import sleep
+
+
 def go_to_lineage(app):
     try:
-        app.child_window(title="NGPClient.Models.PurpleHomeMenuItem", auto_id="L2M",
-                              control_type="ListItem").is_visible()
+        app.child_window(title="File Scan and Game Settings", auto_id="BtnGameSetting", control_type="Button").is_visible()
     except:
-        app.child_window(title="NGPClient.Models.PurpleBadgedMenuItem", auto_id="Game",
-                              control_type="ListItem").click_input()
-        app.child_window(title="Lineage2M", control_type="Text").click_input()
+        app.child_window(title="NGPClient.Models.GameCard.GameCardItem", auto_id="Lineage2M",
+                         control_type="ListItem").click_input()
+        sleep(17)
 
 

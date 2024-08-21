@@ -74,7 +74,7 @@ class GoingThroughMainAccounts:
                 break
 
     def _open_main_accounts_management(self):
-        self.app.child_window(title="NGPClient.Models.PurpleBadgedMenuItem", auto_id="MyPage",
+        self.app.child_window(title="NGPClient.Models.MyPageMenuItem",
                               control_type="ListItem").wrapper_object().click_input()
 
     def _main_accounts(self):
